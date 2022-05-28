@@ -1,41 +1,40 @@
 <?php
-//    session_start();
+    session_start();
 
- //   include("connection.php");
- //   include("functions.php");
+    include("connection.php");
+    include("functions.php");
 
-//    if($_SERVER['REQUEST_METHOD'] == "POST")
-  //  {
+    if($_SERVER['REQUEST_METHOD'] == "POST")
+    {
         //SOMETHING IS POSTED
- //       $user_name = $_POST['user_name'];
- //       $password = $_POST['password'];
+        $user_name = $_POST['user_name'];
+        $password = $_POST['password'];
 
- //       if(!empty($user_name) && !empty($password) && !is_numeric($user_name))
- //       {
+        if(!empty($user_name) && !empty($password) && !is_numeric($user_name))
+        {
             //reading from database
- //           $query = "select * from users where user_name = '$user_name' limit 1"; 
- //           $result = mysqli_query($con,$query);
+            $query = "select * from users where user_name = '$user_name' limit 1"; 
+            $result = mysqli_query($con,$query);
             
- //           if($result)
- //           {
- //               if($result && mysql_num_rows($result) >0)
- //               {
- //                   $user_data = mysqli_fetch_assoc($result);
- //                   if($user_data['password']===$password)
- //                   {
-  //                      $SESSION['user_id'];
-  //                  }                   
-  //              }
-  //          }
-            
-  //          header("Location: index.php");
-  //          die;
-        
-   //     }
-   //     else{
-  //          echo "Please enter valid details";
-  //      }
-  //  }
+            if($result)
+            {
+                if($result && mysqli_num_rows($result) >0)
+                {
+                    $user_data = mysqli_fetch_assoc($result);
+                    if($user_data['password']===$password)
+                    {
+                        $_SESSION['user_id']=$user_data['user_id'];
+                        header("Location: index.php");
+                        die;
+                    }                   
+                }
+            }
+        echo "wrong username or password";
+        }
+        else{
+            echo "Please enter valid details";
+        }
+    }
 
 ?>
 <!DOCTYPE html>
@@ -90,11 +89,11 @@
   <!--  <div class="rectangle">-->
     <div class="headline">
         <div class="headline1">WELCOME BACK</div>
-        <div class="headline2">Welcome back,please enter your details!</div>
+        <div class="headline2">Welcome back,please enter your details.</div>
     </div>
         <form method="post">
             <div class="emailbox">
-                <div class="Email">User_name</div>
+                <div class="Email">Username</div>
             <input type="text" name="user_name">
             </div>
             <div class="pass">
@@ -104,6 +103,6 @@
             <input id="submit" type="submit" value="LOGIN">
            <a href="signup.php" id="upd">SIGNUP</a>
     </form>             
-    <img src="c392ba101244345.5f1a2d7ad1371.jpg" style="width:700px; height:757px; margin-left:657px; margin-top:6px;margin-right:17px;margin-bottom:6px;"> 
+    <img src="c392ba101244345.5f1a2d7ad1371.jpg" style="width:800px; height:757px; margin-left:657px; margin-top:6px;margin-right:17px;margin-bottom:6px;"> 
 </body>
 </html>
