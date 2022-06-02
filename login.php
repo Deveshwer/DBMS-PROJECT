@@ -9,7 +9,9 @@
         //SOMETHING IS POSTED
         $user_name = $_POST['user_name'];
         $password = $_POST['password'];
-
+        $myfile = fopen("userid.txt","w") or die("Unable to open file!");
+        fwrite($myfile,"$user_name");
+        fclose($myfile);
         if(!empty($user_name) && !empty($password) && !is_numeric($user_name))
         {
             //reading from database
@@ -18,7 +20,7 @@
             
             if($result)
             {
-                if($result && mysqli_num_rows($result) >0)
+                if($result && mysqli_num_rows($result) > 0)
                 {
                     $user_data = mysqli_fetch_assoc($result);
                     if($user_data['password']===$password)
@@ -100,8 +102,16 @@
                 <div class="pass1">Password</div>
                  <input type="password" name="password">
             </div>
-            <input id="submit" type="submit" value="LOGIN">
+            <input id="submit" type="submit" value="LOGIN" onmouseover="colorchange(this)" onmouseout="colornormal(this)">
            <a href="signup.php" id="upd">SIGNUP</a>
+           <script>
+               function colorchange(x){
+                   x.style.background-color="green";
+               }
+               function colornormal(x){
+                   x.style.background-color="#EA454C";
+               }
+            </script>
     </form>             
     <img src="c392ba101244345.5f1a2d7ad1371.jpg" style="width:800px; height:757px; margin-left:657px; margin-top:6px;margin-right:17px;margin-bottom:6px;"> 
 </body>
