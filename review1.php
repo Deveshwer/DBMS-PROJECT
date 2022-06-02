@@ -1,7 +1,8 @@
 <?php
+
+session_start();
 include("connection1.php");
 include("functions.php");
-
 // If file upload form is submitted
  
 // Display status message 
@@ -25,13 +26,20 @@ $brand = $_POST['bname'];
 $Category_name = $_POST['sel_cat'];
 $Description = $_POST['desc'];
 $Rating = $_POST['rating_control'];
+$myfile=fopen("userid.txt","r") or die("Unable to open file");
+while(!feof($myfile)){
+    $user_name=fgets($myfile);
+}
 if(!empty($Product_name) && !empty($brand) && !empty($Category_name) && !empty($Description) && !empty($Rating))
 {
-    $Product_id = random_num(20);
     //$v = $_POST['Image'];
-    $query = "insert into review_content (Product_id,Product_name,brand,Category_name,Description,Rating,image) values ('$Product_id','$Product_name','$brand','$Category_name','$Description','$Rating','$imagedata')";
+ //   if(!uniqueness($con,$Product_name))
+ //   {
+        $query1 = "insert ignore into products(Product_name) values('$Product_name')";
+ //   }
+    $query = "insert into review_content (Username,Product_name,brand,Category_name,Description,Rating,image) values ('$user_name','$Product_name','$brand','$Category_name','$Description','$Rating','$imagedata')";
   //  echo $query;
-    if(mysqli_query($con,$query))
+    if(mysqli_query($con,$query) && mysqli_query($con,$query1))
         echo "Successful, Your review has been uploaded!";
     else
         echo "Unsuccessful";
