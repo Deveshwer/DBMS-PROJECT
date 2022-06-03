@@ -26,9 +26,20 @@ while($row = mysqli_fetch_assoc($res))
 	// calculations:
 	$scores = $sentiment->score($string);
 	$class = $sentiment->categorise($string);
-	$json = json_encode($scores); 
+//	$json = json_encode($scores); 
+
+//	$ans = $scores['pos'];
+	 if($scores['pos'] > $scores['neg'] && $scores['pos'] > $scores['neu']){
+		 $ans = $scores['pos'] * 180;
+	 }
+	 elseif($scores['neg'] > $scores['pos'] && $scores['neg'] > $scores['neu']){
+		$ans = $scores['pos'] * 50;
+	}
+	else{
+		$ans =$scores['neu'] * 100;
+	}
 	// output:
-	$query1 = "insert into sentiment (productid,sentimentper) values('$product','$json')";
+	$query1 = "insert into sentiment(productid,sentimentper) values('$product','$ans')";
 	$result = mysqli_query($con , $query1);
 	echo "String: $string\n";
 	echo "Dominant: $class, scores: ";
@@ -37,4 +48,5 @@ while($row = mysqli_fetch_assoc($res))
 	echo "\n";
 }
 mysqli_close($con);
-?>
+
+
