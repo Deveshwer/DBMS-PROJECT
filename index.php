@@ -1,8 +1,11 @@
 <?php
 session_start();
-     include("connection.php");
-     include("functions.php");
-     $user_data = check_login($con);
+    include("connection.php");
+    include("functions.php");
+    $user_data = check_login($con);
+    
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +16,9 @@ session_start();
     <!-- <link rel="stylesheet" href="styles.css">   */ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel = "stylesheet" href = "homestyle.css">
 <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono&display=swap" rel="stylesheet">
@@ -177,5 +182,40 @@ session_start();
         <div id="logout"><a href="logout.php">LOGOUT</a></div>
     </div>
     </div>
+    <table class="table">
+        <thead>
+			<tr>
+				<th>User name</th>
+                <th>Product name</th>
+				<th>brand</th>
+				<th>Category_name</th>
+				<th>Description</th>
+				<th>Rating</th>
+			</tr>
+		</thead>
+
+    <tbody>
+      <?php
+          include("connection1.php");  
+            // read all row from database table
+			$sql1 = "SELECT * FROM review_content";
+		$result1 = mysqli_query($con, $sql1);
+
+            // read data of each row
+			while($row = mysqli_fetch_assoc($result1)) {
+                echo "<tr>
+                    <td>" . $row["Username"] . "</td>
+                    <td>" . $row["Product_name"] . "</td>
+                    <td>" . $row["brand"] . "</td>
+                    <td>" . $row["Category_name"] . "</td>
+                    <td>" . $row["Description"] . "</td>
+                    <td>" . $row["Rating"]. "</td>
+                </tr>";
+            }
+
+            mysqli_close($con);
+            ?>
+        </tbody>
+    </table>
 </body>
 </html>
